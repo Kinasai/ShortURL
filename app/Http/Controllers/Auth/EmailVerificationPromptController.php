@@ -13,10 +13,10 @@ class EmailVerificationPromptController extends Controller
     /**
      * Show the email verification prompt page.
      */
-    public function __invoke(Request $request): RedirectResponse|Response
+    public function __invoke(Request $request): \Symfony\Component\HttpFoundation\Response | Response
     {
         return $request->user()->hasVerifiedEmail()
-                    ? redirect()->intended(route('dashboard', absolute: false))
+                    ? Inertia::location(route('filament.admin.pages.dashboard') . '?verified=1')
                     : Inertia::render('auth/VerifyEmail', ['status' => $request->session()->get('status')]);
     }
 }
